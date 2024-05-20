@@ -1,0 +1,226 @@
+﻿Build1=Default,b4a.example
+File1=360_F_484369865_uGrJURH8FtldtXF9C9SfGqgx2xj0oWWA.jpg
+File10=pexels-anniroenkae-2723329.jpg
+File11=SignUp.bal
+File12=test.db
+File13=vector-art-colorful-8140x8140-12144.jpg
+File2=add.png
+File3=Add_Balance.bal
+File4=AddExpense.bal
+File5=bf59d663df3fc56367557f472cebad75.jpg
+File6=bg.jpg
+File7=Dashboard.bal
+File8=Expense Tracker.png
+File9=Main.bal
+FileGroup1=Default Group
+FileGroup10=Default Group
+FileGroup11=Default Group
+FileGroup12=Default Group
+FileGroup13=Default Group
+FileGroup2=Default Group
+FileGroup3=Default Group
+FileGroup4=Default Group
+FileGroup5=Default Group
+FileGroup6=Default Group
+FileGroup7=Default Group
+FileGroup8=Default Group
+FileGroup9=Default Group
+Group=Default Group
+Library1=core
+Library2=sql
+Library3=xui
+Library4=xui views
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="33"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.LightTheme)~\n~'End of default text.~\n~
+Module1=AddBalance
+Module2=AddExpense
+Module3=Dashboard
+Module4=SignUp
+Module5=Starter
+NumberOfFiles=13
+NumberOfLibraries=4
+NumberOfModules=5
+Version=12.8
+@EndOfDesignText@
+#Region  Project Attributes 
+	#ApplicationLabel: B4A Example
+	#VersionCode: 1
+	#VersionName: 
+	'SupportedOrientations possible values: unspecified, landscape or portrait.
+	#SupportedOrientations: unspecified
+	#CanInstallToExternalStorage: False
+#End Region
+
+#Region  Activity Attributes 
+	#FullScreen: False
+	#IncludeTitle: False
+#End Region
+
+Sub Process_Globals
+	'These global variables will be declared once when the application starts.
+	'These variables can be accessed from all modules.
+	Private xui As XUI
+	Dim sql As SQL
+	Dim Cursor As Cursor
+	Dim account_id As Int
+End Sub
+
+Sub Globals
+	'These global variables will be redeclared each time the activity is created.
+	Private Password As B4XFloatTextField
+	Private Email As B4XFloatTextField
+	
+	Dim UserName As String
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+	If FirstTime Then
+		sql.Initialize(File.DirInternal, "test.db", True)
+	End If
+	
+'	Wait For (dropTable) Complete (Success As Boolean)
+'	If Success Then
+'	
+'	End If
+	
+	Wait For (createTableAccounts) Complete (Success As Boolean)
+	If Success Then'
+'		Wait For (insertData) Complete (Success As Boolean)
+'		If Success Then
+'			Dim Cursor As Cursor
+'			Cursor = sql.ExecQuery("SELECT * FROM table1")
+'			For i = 0 To Cursor.RowCount - 1
+'				Cursor.Position = i
+''				Log(Cursor.GetString("col1"))
+'				Log($"column1: ${Cursor.GetString("col1")} "$) 
+'				Log($"column2: ${Cursor.GetString("col2")} "$)
+'				Log($"column3: ${Cursor.GetString("col3")} "$)
+'			Next
+'		End If
+	End If
+	
+	Wait For (createTableAccountExpense) Complete (Success As Boolean)
+	If Success Then
+	
+	End If
+	
+	Activity.LoadLayout("Main")
+End Sub
+
+Sub Activity_Resume
+
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+
+End Sub
+
+Public Sub createTableAccounts As ResumableSub
+	
+	Dim query As String = $"
+		CREATE TABLE IF NOT EXISTS accounts (
+			accountID INTEGER PRIMARY KEY AUTOINCREMENT, 
+			name TEXT, 
+			email TEXT, 
+			password TEXT, 
+			balance REAL DEFAULT 0.00
+		)"$
+	
+	sql.ExecNonQuery(query)
+	
+	Return True
+End Sub
+
+Public Sub createTableAccountExpense As ResumableSub
+	
+	Dim query As String = $"
+		CREATE TABLE IF NOT EXISTS accounts_expense (
+			expenseID INTEGER PRIMARY KEY AUTOINCREMENT, 
+			account_id REAL, 
+			expense_amount TEXT, 
+			purpose TEXT, 
+			FOREIGN KEY(account_id) REFERENCES accounts(accountID)
+		)"$
+		
+	sql.ExecNonQuery(query)
+	
+	Return True
+End Sub
+
+Public Sub dropTable As ResumableSub
+	sql.ExecNonQuery("DROP TABLE accounts")
+	Return True
+End Sub
+
+Private Sub Register_Click
+	StartActivity(SignUp)
+	Activity.Finish
+End Sub
+
+Public Sub Login As ResumableSub
+	Dim result As Boolean
+	
+	Try
+		Dim query As String = $"SELECT * FROM accounts WHERE email=? AND password=?"$
+		Dim rs As ResultSet = sql.ExecQuery2(query, Array As String(Email.Text, Password.Text))
+		
+		If rs.NextRow Then
+			Log("Email: " & rs.GetString("email"))
+			Log("Password: " & rs.GetString("password"))
+			
+			Cursor = sql.ExecQuery("SELECT * FROM accounts")
+			For i = 0 To Cursor.RowCount - 1
+				Cursor.Position = i
+				'				Log(Cursor.GetString("col1"))
+				Log($"name: ${Cursor.GetString("name")} "$)
+				Log($"emali: ${Cursor.GetString("email")} "$)
+				Log($"password: ${Cursor.GetString("password")} "$)
+				Log($"accountID: ${Cursor.GetString("accountID")} "$)
+				Log($"balance: ${Cursor.GetString("balance")} "$)
+			Next
+			
+			UserName = rs.GetString("name")
+			Dashboard.ProfileName = UserName
+			account_id = rs.GetString("accountID")
+			Dashboard.user_balance = rs.GetString("balance")
+			StartActivity(Dashboard)
+			result = True
+		Else
+				xui.MsgboxAsync("Invalid username and password", "")
+				Email.Text = ""
+				Password.Text = ""
+				Email.RequestFocusAndShowKeyboard
+				result = False
+		End If
+	Catch
+		Log(LastException)
+		xui.MsgboxAsync(LastException, "Error")
+		result = False
+	End Try
+	
+	Return result
+End Sub
+
+Private Sub LoginButton_Click
+	
+	If Email.Text = "" Then
+		xui.MsgboxAsync("Email required", "")
+		Email.RequestFocusAndShowKeyboard
+		Return
+	End If
+	
+	If Password.Text = "" Then
+		xui.MsgboxAsync("Password required", "")
+		Password.RequestFocusAndShowKeyboard
+		Return
+	End If
+	
+	Try
+		Wait For (Login) Complete (Success As Boolean)
+		If Success Then
+			xui.MsgboxAsync("Login successfully", "")
+		End If
+	Catch
+		Log(LastException)
+		xui.MsgboxAsync(LastException, "Error")
+	End Try
+End Sub
