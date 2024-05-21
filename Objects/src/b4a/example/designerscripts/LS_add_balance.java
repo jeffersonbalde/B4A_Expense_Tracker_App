@@ -9,8 +9,6 @@ public class LS_add_balance{
 public static void LS_general(anywheresoftware.b4a.BA ba, android.view.View parent, anywheresoftware.b4a.keywords.LayoutValues lv, java.util.Map props,
 java.util.Map<String, anywheresoftware.b4a.keywords.LayoutBuilder.ViewWrapperAndAnchor> views, int width, int height, float scale) throws Exception {
 anywheresoftware.b4a.keywords.LayoutBuilder.setScaleRate(0.3);
-//BA.debugLineNum = 2;BA.debugLine="AutoScaleAll"[Add_Balance/General script]
-anywheresoftware.b4a.keywords.LayoutBuilder.scaleAll(views);
 //BA.debugLineNum = 4;BA.debugLine="Panel1.Width = 90%X"[Add_Balance/General script]
 views.get("panel1").vw.setWidth((int)((90d / 100 * width)));
 //BA.debugLineNum = 5;BA.debugLine="Panel1.Left = 5%X"[Add_Balance/General script]

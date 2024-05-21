@@ -34,7 +34,7 @@ public class main extends Activity implements B4AActivity{
 		super.onCreate(savedInstanceState);
         mostCurrent = this;
 		if (processBA == null) {
-			processBA = new anywheresoftware.b4a.ShellBA(this.getApplicationContext(), null, null, "b4a.example", "b4a.example.main");
+			processBA = new BA(this.getApplicationContext(), null, null, "b4a.example", "b4a.example.main");
 			processBA.loadHtSubs(this.getClass());
 	        float deviceScale = getApplicationContext().getResources().getDisplayMetrics().density;
 	        BALayout.setDeviceScale(deviceScale);
@@ -335,100 +335,6 @@ public class main extends Activity implements B4AActivity{
             
     }
 
-
-
-public static void initializeProcessGlobals() {
-    
-    if (main.processGlobalsRun == false) {
-	    main.processGlobalsRun = true;
-		try {
-		        b4a.example.dateutils._process_globals();
-		
-        } catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-    }
-}
-public static boolean isAnyActivityVisible() {
-    boolean vis = false;
-vis = vis | (main.mostCurrent != null);
-vis = vis | (signup.mostCurrent != null);
-vis = vis | (dashboard.mostCurrent != null);
-vis = vis | (addbalance.mostCurrent != null);
-vis = vis | (addexpense.mostCurrent != null);
-return vis;}
-
-private static BA killProgramHelper(BA ba) {
-    if (ba == null)
-        return null;
-    anywheresoftware.b4a.BA.SharedProcessBA sharedProcessBA = ba.sharedProcessBA;
-    if (sharedProcessBA == null || sharedProcessBA.activityBA == null)
-        return null;
-    return sharedProcessBA.activityBA.get();
-}
-public static void killProgram() {
-     {
-            Activity __a = null;
-            if (main.previousOne != null) {
-				__a = main.previousOne.get();
-			}
-            else {
-                BA ba = killProgramHelper(main.mostCurrent == null ? null : main.mostCurrent.processBA);
-                if (ba != null) __a = ba.activity;
-            }
-            if (__a != null)
-				__a.finish();}
-
- {
-            Activity __a = null;
-            if (signup.previousOne != null) {
-				__a = signup.previousOne.get();
-			}
-            else {
-                BA ba = killProgramHelper(signup.mostCurrent == null ? null : signup.mostCurrent.processBA);
-                if (ba != null) __a = ba.activity;
-            }
-            if (__a != null)
-				__a.finish();}
-
- {
-            Activity __a = null;
-            if (dashboard.previousOne != null) {
-				__a = dashboard.previousOne.get();
-			}
-            else {
-                BA ba = killProgramHelper(dashboard.mostCurrent == null ? null : dashboard.mostCurrent.processBA);
-                if (ba != null) __a = ba.activity;
-            }
-            if (__a != null)
-				__a.finish();}
-
-BA.applicationContext.stopService(new android.content.Intent(BA.applicationContext, starter.class));
- {
-            Activity __a = null;
-            if (addbalance.previousOne != null) {
-				__a = addbalance.previousOne.get();
-			}
-            else {
-                BA ba = killProgramHelper(addbalance.mostCurrent == null ? null : addbalance.mostCurrent.processBA);
-                if (ba != null) __a = ba.activity;
-            }
-            if (__a != null)
-				__a.finish();}
-
- {
-            Activity __a = null;
-            if (addexpense.previousOne != null) {
-				__a = addexpense.previousOne.get();
-			}
-            else {
-                BA ba = killProgramHelper(addexpense.mostCurrent == null ? null : addexpense.mostCurrent.processBA);
-                if (ba != null) __a = ba.activity;
-            }
-            if (__a != null)
-				__a.finish();}
-
-}
 public anywheresoftware.b4a.keywords.Common __c = null;
 public static anywheresoftware.b4a.objects.B4XViewWrapper.XUI _xui = null;
 public static anywheresoftware.b4a.sql.SQL _sql = null;
@@ -440,14 +346,20 @@ public static String _username = "";
 public b4a.example.dateutils _dateutils = null;
 public b4a.example.signup _signup = null;
 public b4a.example.dashboard _dashboard = null;
-public b4a.example.starter _starter = null;
 public b4a.example.addbalance _addbalance = null;
 public b4a.example.addexpense _addexpense = null;
+public b4a.example.starter _starter = null;
 public b4a.example.xuiviewsutils _xuiviewsutils = null;
+
+public static boolean isAnyActivityVisible() {
+    boolean vis = false;
+vis = vis | (main.mostCurrent != null);
+vis = vis | (signup.mostCurrent != null);
+vis = vis | (dashboard.mostCurrent != null);
+vis = vis | (addbalance.mostCurrent != null);
+vis = vis | (addexpense.mostCurrent != null);
+return vis;}
 public static void  _activity_create(boolean _firsttime) throws Exception{
-RDebugUtils.currentModule="main";
-if (Debug.shouldDelegate(mostCurrent.activityBA, "activity_create", false))
-	 {Debug.delegate(mostCurrent.activityBA, "activity_create", new Object[] {_firsttime}); return;}
 ResumableSub_Activity_Create rsub = new ResumableSub_Activity_Create(null,_firsttime);
 rsub.resume(processBA, null);
 }
@@ -462,7 +374,6 @@ boolean _success = false;
 
 @Override
 public void resume(BA ba, Object[] result) throws Exception{
-RDebugUtils.currentModule="main";
 
     while (true) {
         switch (state) {
@@ -472,8 +383,7 @@ return;
 case 0:
 //C
 this.state = 1;
-RDebugUtils.currentLine=131073;
- //BA.debugLineNum = 131073;BA.debugLine="If FirstTime Then";
+ //BA.debugLineNum = 34;BA.debugLine="If FirstTime Then";
 if (true) break;
 
 case 1:
@@ -486,8 +396,7 @@ this.state = 3;
 case 3:
 //C
 this.state = 4;
-RDebugUtils.currentLine=131074;
- //BA.debugLineNum = 131074;BA.debugLine="sql.Initialize(File.DirInternal, \"test.db\", True";
+ //BA.debugLineNum = 35;BA.debugLine="sql.Initialize(File.DirInternal, \"test.db\", True";
 parent._sql.Initialize(anywheresoftware.b4a.keywords.Common.File.getDirInternal(),"test.db",anywheresoftware.b4a.keywords.Common.True);
  if (true) break;
 
@@ -495,9 +404,8 @@ case 4:
 //C
 this.state = 5;
 ;
-RDebugUtils.currentLine=131082;
- //BA.debugLineNum = 131082;BA.debugLine="Wait For (createTableAccounts) Complete (Success";
-anywheresoftware.b4a.keywords.Common.WaitFor("complete", processBA, new anywheresoftware.b4a.shell.DebugResumableSub.DelegatableResumableSub(this, "main", "activity_create"), _createtableaccounts());
+ //BA.debugLineNum = 43;BA.debugLine="Wait For (createTableAccounts) Complete (Success";
+anywheresoftware.b4a.keywords.Common.WaitFor("complete", processBA, this, _createtableaccounts());
 this.state = 13;
 return;
 case 13:
@@ -505,8 +413,7 @@ case 13:
 this.state = 5;
 _success = (Boolean) result[0];
 ;
-RDebugUtils.currentLine=131083;
- //BA.debugLineNum = 131083;BA.debugLine="If Success Then'";
+ //BA.debugLineNum = 44;BA.debugLine="If Success Then'";
 if (true) break;
 
 case 5:
@@ -525,9 +432,8 @@ case 8:
 //C
 this.state = 9;
 ;
-RDebugUtils.currentLine=131098;
- //BA.debugLineNum = 131098;BA.debugLine="Wait For (createTableAccountExpense) Complete (Su";
-anywheresoftware.b4a.keywords.Common.WaitFor("complete", processBA, new anywheresoftware.b4a.shell.DebugResumableSub.DelegatableResumableSub(this, "main", "activity_create"), _createtableaccountexpense());
+ //BA.debugLineNum = 59;BA.debugLine="Wait For (createTableAccountExpense) Complete (Su";
+anywheresoftware.b4a.keywords.Common.WaitFor("complete", processBA, this, _createtableaccountexpense());
 this.state = 14;
 return;
 case 14:
@@ -535,8 +441,7 @@ case 14:
 this.state = 9;
 _success = (Boolean) result[0];
 ;
-RDebugUtils.currentLine=131099;
- //BA.debugLineNum = 131099;BA.debugLine="If Success Then";
+ //BA.debugLineNum = 60;BA.debugLine="If Success Then";
 if (true) break;
 
 case 9:
@@ -555,66 +460,28 @@ case 12:
 //C
 this.state = -1;
 ;
-RDebugUtils.currentLine=131103;
- //BA.debugLineNum = 131103;BA.debugLine="Activity.LoadLayout(\"Main\")";
+ //BA.debugLineNum = 64;BA.debugLine="Activity.LoadLayout(\"Main\")";
 parent.mostCurrent._activity.LoadLayout("Main",mostCurrent.activityBA);
-RDebugUtils.currentLine=131104;
- //BA.debugLineNum = 131104;BA.debugLine="End Sub";
+ //BA.debugLineNum = 66;BA.debugLine="End Sub";
 if (true) break;
 
             }
         }
     }
 }
-public static anywheresoftware.b4a.keywords.Common.ResumableSubWrapper  _createtableaccounts() throws Exception{
-RDebugUtils.currentModule="main";
-if (Debug.shouldDelegate(mostCurrent.activityBA, "createtableaccounts", false))
-	 {return ((anywheresoftware.b4a.keywords.Common.ResumableSubWrapper) Debug.delegate(mostCurrent.activityBA, "createtableaccounts", null));}
-ResumableSub_createTableAccounts rsub = new ResumableSub_createTableAccounts(null);
-rsub.resume(processBA, null);
-return (anywheresoftware.b4a.keywords.Common.ResumableSubWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.keywords.Common.ResumableSubWrapper(), rsub);
+public static void  _complete(boolean _success) throws Exception{
 }
-public static class ResumableSub_createTableAccounts extends BA.ResumableSub {
-public ResumableSub_createTableAccounts(b4a.example.main parent) {
-this.parent = parent;
+public static String  _activity_pause(boolean _userclosed) throws Exception{
+ //BA.debugLineNum = 72;BA.debugLine="Sub Activity_Pause (UserClosed As Boolean)";
+ //BA.debugLineNum = 74;BA.debugLine="End Sub";
+return "";
 }
-b4a.example.main parent;
-String _query = "";
-
-@Override
-public void resume(BA ba, Object[] result) throws Exception{
-RDebugUtils.currentModule="main";
-
-    while (true) {
-        switch (state) {
-            case -1:
-{
-anywheresoftware.b4a.keywords.Common.ReturnFromResumableSub(this,null);return;}
-case 0:
-//C
-this.state = -1;
-RDebugUtils.currentLine=27066370;
- //BA.debugLineNum = 27066370;BA.debugLine="Dim query As String = $\" 		CREATE TABLE IF NOT EX";
-_query = ("\n"+"		CREATE TABLE IF NOT EXISTS accounts (\n"+"			accountID INTEGER PRIMARY KEY AUTOINCREMENT, \n"+"			name TEXT, \n"+"			email TEXT, \n"+"			password TEXT, \n"+"			balance REAL DEFAULT 0.00\n"+"		)");
-RDebugUtils.currentLine=27066379;
- //BA.debugLineNum = 27066379;BA.debugLine="sql.ExecNonQuery(query)";
-parent._sql.ExecNonQuery(_query);
-RDebugUtils.currentLine=27066381;
- //BA.debugLineNum = 27066381;BA.debugLine="Return True";
-if (true) {
-anywheresoftware.b4a.keywords.Common.ReturnFromResumableSub(this,(Object)(anywheresoftware.b4a.keywords.Common.True));return;};
-RDebugUtils.currentLine=27066382;
- //BA.debugLineNum = 27066382;BA.debugLine="End Sub";
-if (true) break;
-
-            }
-        }
-    }
+public static String  _activity_resume() throws Exception{
+ //BA.debugLineNum = 68;BA.debugLine="Sub Activity_Resume";
+ //BA.debugLineNum = 70;BA.debugLine="End Sub";
+return "";
 }
 public static anywheresoftware.b4a.keywords.Common.ResumableSubWrapper  _createtableaccountexpense() throws Exception{
-RDebugUtils.currentModule="main";
-if (Debug.shouldDelegate(mostCurrent.activityBA, "createtableaccountexpense", false))
-	 {return ((anywheresoftware.b4a.keywords.Common.ResumableSubWrapper) Debug.delegate(mostCurrent.activityBA, "createtableaccountexpense", null));}
 ResumableSub_createTableAccountExpense rsub = new ResumableSub_createTableAccountExpense(null);
 rsub.resume(processBA, null);
 return (anywheresoftware.b4a.keywords.Common.ResumableSubWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.keywords.Common.ResumableSubWrapper(), rsub);
@@ -628,7 +495,6 @@ String _query = "";
 
 @Override
 public void resume(BA ba, Object[] result) throws Exception{
-RDebugUtils.currentModule="main";
 
     while (true) {
         switch (state) {
@@ -638,46 +504,58 @@ anywheresoftware.b4a.keywords.Common.ReturnFromResumableSub(this,null);return;}
 case 0:
 //C
 this.state = -1;
-RDebugUtils.currentLine=32571394;
- //BA.debugLineNum = 32571394;BA.debugLine="Dim query As String = $\" 		CREATE TABLE IF NOT EX";
+ //BA.debugLineNum = 94;BA.debugLine="Dim query As String = $\" 		CREATE TABLE IF NOT EX";
 _query = ("\n"+"		CREATE TABLE IF NOT EXISTS accounts_expense (\n"+"			expenseID INTEGER PRIMARY KEY AUTOINCREMENT, \n"+"			account_id REAL, \n"+"			expense_amount TEXT, \n"+"			purpose TEXT, \n"+"			FOREIGN KEY(account_id) REFERENCES accounts(accountID)\n"+"		)");
-RDebugUtils.currentLine=32571403;
- //BA.debugLineNum = 32571403;BA.debugLine="sql.ExecNonQuery(query)";
+ //BA.debugLineNum = 103;BA.debugLine="sql.ExecNonQuery(query)";
 parent._sql.ExecNonQuery(_query);
-RDebugUtils.currentLine=32571405;
- //BA.debugLineNum = 32571405;BA.debugLine="Return True";
+ //BA.debugLineNum = 105;BA.debugLine="Return True";
 if (true) {
 anywheresoftware.b4a.keywords.Common.ReturnFromResumableSub(this,(Object)(anywheresoftware.b4a.keywords.Common.True));return;};
-RDebugUtils.currentLine=32571406;
- //BA.debugLineNum = 32571406;BA.debugLine="End Sub";
+ //BA.debugLineNum = 106;BA.debugLine="End Sub";
 if (true) break;
 
             }
         }
     }
 }
-public static String  _activity_pause(boolean _userclosed) throws Exception{
-RDebugUtils.currentModule="main";
-RDebugUtils.currentLine=262144;
- //BA.debugLineNum = 262144;BA.debugLine="Sub Activity_Pause (UserClosed As Boolean)";
-RDebugUtils.currentLine=262146;
- //BA.debugLineNum = 262146;BA.debugLine="End Sub";
-return "";
+public static anywheresoftware.b4a.keywords.Common.ResumableSubWrapper  _createtableaccounts() throws Exception{
+ResumableSub_createTableAccounts rsub = new ResumableSub_createTableAccounts(null);
+rsub.resume(processBA, null);
+return (anywheresoftware.b4a.keywords.Common.ResumableSubWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.keywords.Common.ResumableSubWrapper(), rsub);
 }
-public static String  _activity_resume() throws Exception{
-RDebugUtils.currentModule="main";
-if (Debug.shouldDelegate(mostCurrent.activityBA, "activity_resume", false))
-	 {return ((String) Debug.delegate(mostCurrent.activityBA, "activity_resume", null));}
-RDebugUtils.currentLine=196608;
- //BA.debugLineNum = 196608;BA.debugLine="Sub Activity_Resume";
-RDebugUtils.currentLine=196610;
- //BA.debugLineNum = 196610;BA.debugLine="End Sub";
-return "";
+public static class ResumableSub_createTableAccounts extends BA.ResumableSub {
+public ResumableSub_createTableAccounts(b4a.example.main parent) {
+this.parent = parent;
+}
+b4a.example.main parent;
+String _query = "";
+
+@Override
+public void resume(BA ba, Object[] result) throws Exception{
+
+    while (true) {
+        switch (state) {
+            case -1:
+{
+anywheresoftware.b4a.keywords.Common.ReturnFromResumableSub(this,null);return;}
+case 0:
+//C
+this.state = -1;
+ //BA.debugLineNum = 78;BA.debugLine="Dim query As String = $\" 		CREATE TABLE IF NOT EX";
+_query = ("\n"+"		CREATE TABLE IF NOT EXISTS accounts (\n"+"			accountID INTEGER PRIMARY KEY AUTOINCREMENT, \n"+"			name TEXT, \n"+"			email TEXT, \n"+"			password TEXT, \n"+"			balance REAL DEFAULT 0.00\n"+"		)");
+ //BA.debugLineNum = 87;BA.debugLine="sql.ExecNonQuery(query)";
+parent._sql.ExecNonQuery(_query);
+ //BA.debugLineNum = 89;BA.debugLine="Return True";
+if (true) {
+anywheresoftware.b4a.keywords.Common.ReturnFromResumableSub(this,(Object)(anywheresoftware.b4a.keywords.Common.True));return;};
+ //BA.debugLineNum = 90;BA.debugLine="End Sub";
+if (true) break;
+
+            }
+        }
+    }
 }
 public static anywheresoftware.b4a.keywords.Common.ResumableSubWrapper  _droptable() throws Exception{
-RDebugUtils.currentModule="main";
-if (Debug.shouldDelegate(mostCurrent.activityBA, "droptable", false))
-	 {return ((anywheresoftware.b4a.keywords.Common.ResumableSubWrapper) Debug.delegate(mostCurrent.activityBA, "droptable", null));}
 ResumableSub_dropTable rsub = new ResumableSub_dropTable(null);
 rsub.resume(processBA, null);
 return (anywheresoftware.b4a.keywords.Common.ResumableSubWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.keywords.Common.ResumableSubWrapper(), rsub);
@@ -690,7 +568,6 @@ b4a.example.main parent;
 
 @Override
 public void resume(BA ba, Object[] result) throws Exception{
-RDebugUtils.currentModule="main";
 
     while (true) {
         switch (state) {
@@ -700,25 +577,30 @@ anywheresoftware.b4a.keywords.Common.ReturnFromResumableSub(this,null);return;}
 case 0:
 //C
 this.state = -1;
-RDebugUtils.currentLine=458753;
- //BA.debugLineNum = 458753;BA.debugLine="sql.ExecNonQuery(\"DROP TABLE accounts\")";
+ //BA.debugLineNum = 109;BA.debugLine="sql.ExecNonQuery(\"DROP TABLE accounts\")";
 parent._sql.ExecNonQuery("DROP TABLE accounts");
-RDebugUtils.currentLine=458754;
- //BA.debugLineNum = 458754;BA.debugLine="Return True";
+ //BA.debugLineNum = 110;BA.debugLine="Return True";
 if (true) {
 anywheresoftware.b4a.keywords.Common.ReturnFromResumableSub(this,(Object)(anywheresoftware.b4a.keywords.Common.True));return;};
-RDebugUtils.currentLine=458755;
- //BA.debugLineNum = 458755;BA.debugLine="End Sub";
+ //BA.debugLineNum = 111;BA.debugLine="End Sub";
 if (true) break;
 
             }
         }
     }
 }
+public static String  _globals() throws Exception{
+ //BA.debugLineNum = 24;BA.debugLine="Sub Globals";
+ //BA.debugLineNum = 26;BA.debugLine="Private Password As B4XFloatTextField";
+mostCurrent._password = new b4a.example.b4xfloattextfield();
+ //BA.debugLineNum = 27;BA.debugLine="Private Email As B4XFloatTextField";
+mostCurrent._email = new b4a.example.b4xfloattextfield();
+ //BA.debugLineNum = 29;BA.debugLine="Dim UserName As String";
+mostCurrent._username = "";
+ //BA.debugLineNum = 30;BA.debugLine="End Sub";
+return "";
+}
 public static anywheresoftware.b4a.keywords.Common.ResumableSubWrapper  _login() throws Exception{
-RDebugUtils.currentModule="main";
-if (Debug.shouldDelegate(mostCurrent.activityBA, "login", false))
-	 {return ((anywheresoftware.b4a.keywords.Common.ResumableSubWrapper) Debug.delegate(mostCurrent.activityBA, "login", null));}
 ResumableSub_Login rsub = new ResumableSub_Login(null);
 rsub.resume(processBA, null);
 return (anywheresoftware.b4a.keywords.Common.ResumableSubWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.keywords.Common.ResumableSubWrapper(), rsub);
@@ -737,7 +619,6 @@ int limit9;
 
 @Override
 public void resume(BA ba, Object[] result) throws Exception{
-RDebugUtils.currentModule="main";
 
     while (true) {
 try {
@@ -749,11 +630,9 @@ anywheresoftware.b4a.keywords.Common.ReturnFromResumableSub(this,null);return;}
 case 0:
 //C
 this.state = 1;
-RDebugUtils.currentLine=589825;
- //BA.debugLineNum = 589825;BA.debugLine="Dim result As Boolean";
+ //BA.debugLineNum = 119;BA.debugLine="Dim result As Boolean";
 _result = false;
-RDebugUtils.currentLine=589827;
- //BA.debugLineNum = 589827;BA.debugLine="Try";
+ //BA.debugLineNum = 121;BA.debugLine="Try";
 if (true) break;
 
 case 1:
@@ -767,15 +646,12 @@ case 3:
 //C
 this.state = 4;
 this.catchState = 15;
-RDebugUtils.currentLine=589828;
- //BA.debugLineNum = 589828;BA.debugLine="Dim query As String = $\"SELECT * FROM accounts W";
+ //BA.debugLineNum = 122;BA.debugLine="Dim query As String = $\"SELECT * FROM accounts W";
 _query = ("SELECT * FROM accounts WHERE email=? AND password=?");
-RDebugUtils.currentLine=589829;
- //BA.debugLineNum = 589829;BA.debugLine="Dim rs As ResultSet = sql.ExecQuery2(query, Arra";
+ //BA.debugLineNum = 123;BA.debugLine="Dim rs As ResultSet = sql.ExecQuery2(query, Arra";
 _rs = new anywheresoftware.b4a.sql.SQL.ResultSetWrapper();
-_rs = (anywheresoftware.b4a.sql.SQL.ResultSetWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.sql.SQL.ResultSetWrapper(), (android.database.Cursor)(parent._sql.ExecQuery2(_query,new String[]{parent.mostCurrent._email._gettext /*String*/ (null),parent.mostCurrent._password._gettext /*String*/ (null)})));
-RDebugUtils.currentLine=589831;
- //BA.debugLineNum = 589831;BA.debugLine="If rs.NextRow Then";
+_rs = (anywheresoftware.b4a.sql.SQL.ResultSetWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.sql.SQL.ResultSetWrapper(), (android.database.Cursor)(parent._sql.ExecQuery2(_query,new String[]{parent.mostCurrent._email._gettext /*String*/ (),parent.mostCurrent._password._gettext /*String*/ ()})));
+ //BA.debugLineNum = 125;BA.debugLine="If rs.NextRow Then";
 if (true) break;
 
 case 4:
@@ -790,17 +666,13 @@ this.state = 12;
 case 6:
 //C
 this.state = 7;
-RDebugUtils.currentLine=589832;
- //BA.debugLineNum = 589832;BA.debugLine="Log(\"Email: \" & rs.GetString(\"email\"))";
-anywheresoftware.b4a.keywords.Common.LogImpl("4589832","Email: "+_rs.GetString("email"),0);
-RDebugUtils.currentLine=589833;
- //BA.debugLineNum = 589833;BA.debugLine="Log(\"Password: \" & rs.GetString(\"password\"))";
-anywheresoftware.b4a.keywords.Common.LogImpl("4589833","Password: "+_rs.GetString("password"),0);
-RDebugUtils.currentLine=589835;
- //BA.debugLineNum = 589835;BA.debugLine="Cursor = sql.ExecQuery(\"SELECT * FROM accounts\"";
+ //BA.debugLineNum = 126;BA.debugLine="Log(\"Email: \" & rs.GetString(\"email\"))";
+anywheresoftware.b4a.keywords.Common.LogImpl("3589832","Email: "+_rs.GetString("email"),0);
+ //BA.debugLineNum = 127;BA.debugLine="Log(\"Password: \" & rs.GetString(\"password\"))";
+anywheresoftware.b4a.keywords.Common.LogImpl("3589833","Password: "+_rs.GetString("password"),0);
+ //BA.debugLineNum = 129;BA.debugLine="Cursor = sql.ExecQuery(\"SELECT * FROM accounts\"";
 parent._cursor = (anywheresoftware.b4a.sql.SQL.CursorWrapper) anywheresoftware.b4a.AbsObjectWrapper.ConvertToWrapper(new anywheresoftware.b4a.sql.SQL.CursorWrapper(), (android.database.Cursor)(parent._sql.ExecQuery("SELECT * FROM accounts")));
-RDebugUtils.currentLine=589836;
- //BA.debugLineNum = 589836;BA.debugLine="For i = 0 To Cursor.RowCount - 1";
+ //BA.debugLineNum = 130;BA.debugLine="For i = 0 To Cursor.RowCount - 1";
 if (true) break;
 
 case 7:
@@ -827,24 +699,18 @@ if (true) break;
 case 9:
 //C
 this.state = 18;
-RDebugUtils.currentLine=589837;
- //BA.debugLineNum = 589837;BA.debugLine="Cursor.Position = i";
+ //BA.debugLineNum = 131;BA.debugLine="Cursor.Position = i";
 parent._cursor.setPosition(_i);
-RDebugUtils.currentLine=589839;
- //BA.debugLineNum = 589839;BA.debugLine="Log($\"name: ${Cursor.GetString(\"name\")} \"$)";
-anywheresoftware.b4a.keywords.Common.LogImpl("4589839",("name: "+anywheresoftware.b4a.keywords.Common.SmartStringFormatter("",(Object)(parent._cursor.GetString("name")))+" "),0);
-RDebugUtils.currentLine=589840;
- //BA.debugLineNum = 589840;BA.debugLine="Log($\"emali: ${Cursor.GetString(\"email\")} \"$)";
-anywheresoftware.b4a.keywords.Common.LogImpl("4589840",("emali: "+anywheresoftware.b4a.keywords.Common.SmartStringFormatter("",(Object)(parent._cursor.GetString("email")))+" "),0);
-RDebugUtils.currentLine=589841;
- //BA.debugLineNum = 589841;BA.debugLine="Log($\"password: ${Cursor.GetString(\"password\")";
-anywheresoftware.b4a.keywords.Common.LogImpl("4589841",("password: "+anywheresoftware.b4a.keywords.Common.SmartStringFormatter("",(Object)(parent._cursor.GetString("password")))+" "),0);
-RDebugUtils.currentLine=589842;
- //BA.debugLineNum = 589842;BA.debugLine="Log($\"accountID: ${Cursor.GetString(\"accountID";
-anywheresoftware.b4a.keywords.Common.LogImpl("4589842",("accountID: "+anywheresoftware.b4a.keywords.Common.SmartStringFormatter("",(Object)(parent._cursor.GetString("accountID")))+" "),0);
-RDebugUtils.currentLine=589843;
- //BA.debugLineNum = 589843;BA.debugLine="Log($\"balance: ${Cursor.GetString(\"balance\")}";
-anywheresoftware.b4a.keywords.Common.LogImpl("4589843",("balance: "+anywheresoftware.b4a.keywords.Common.SmartStringFormatter("",(Object)(parent._cursor.GetString("balance")))+" "),0);
+ //BA.debugLineNum = 133;BA.debugLine="Log($\"name: ${Cursor.GetString(\"name\")} \"$)";
+anywheresoftware.b4a.keywords.Common.LogImpl("3589839",("name: "+anywheresoftware.b4a.keywords.Common.SmartStringFormatter("",(Object)(parent._cursor.GetString("name")))+" "),0);
+ //BA.debugLineNum = 134;BA.debugLine="Log($\"emali: ${Cursor.GetString(\"email\")} \"$)";
+anywheresoftware.b4a.keywords.Common.LogImpl("3589840",("emali: "+anywheresoftware.b4a.keywords.Common.SmartStringFormatter("",(Object)(parent._cursor.GetString("email")))+" "),0);
+ //BA.debugLineNum = 135;BA.debugLine="Log($\"password: ${Cursor.GetString(\"password\")";
+anywheresoftware.b4a.keywords.Common.LogImpl("3589841",("password: "+anywheresoftware.b4a.keywords.Common.SmartStringFormatter("",(Object)(parent._cursor.GetString("password")))+" "),0);
+ //BA.debugLineNum = 136;BA.debugLine="Log($\"accountID: ${Cursor.GetString(\"accountID";
+anywheresoftware.b4a.keywords.Common.LogImpl("3589842",("accountID: "+anywheresoftware.b4a.keywords.Common.SmartStringFormatter("",(Object)(parent._cursor.GetString("accountID")))+" "),0);
+ //BA.debugLineNum = 137;BA.debugLine="Log($\"balance: ${Cursor.GetString(\"balance\")}";
+anywheresoftware.b4a.keywords.Common.LogImpl("3589843",("balance: "+anywheresoftware.b4a.keywords.Common.SmartStringFormatter("",(Object)(parent._cursor.GetString("balance")))+" "),0);
  if (true) break;
 if (true) break;
 
@@ -852,43 +718,32 @@ case 10:
 //C
 this.state = 13;
 ;
-RDebugUtils.currentLine=589846;
- //BA.debugLineNum = 589846;BA.debugLine="UserName = rs.GetString(\"name\")";
+ //BA.debugLineNum = 140;BA.debugLine="UserName = rs.GetString(\"name\")";
 parent.mostCurrent._username = _rs.GetString("name");
-RDebugUtils.currentLine=589847;
- //BA.debugLineNum = 589847;BA.debugLine="Dashboard.ProfileName = UserName";
+ //BA.debugLineNum = 141;BA.debugLine="Dashboard.ProfileName = UserName";
 parent.mostCurrent._dashboard._profilename /*String*/  = parent.mostCurrent._username;
-RDebugUtils.currentLine=589848;
- //BA.debugLineNum = 589848;BA.debugLine="account_id = rs.GetString(\"accountID\")";
+ //BA.debugLineNum = 142;BA.debugLine="account_id = rs.GetString(\"accountID\")";
 parent._account_id = (int)(Double.parseDouble(_rs.GetString("accountID")));
-RDebugUtils.currentLine=589849;
- //BA.debugLineNum = 589849;BA.debugLine="Dashboard.user_balance = rs.GetString(\"balance\"";
+ //BA.debugLineNum = 143;BA.debugLine="Dashboard.user_balance = rs.GetString(\"balance\"";
 parent.mostCurrent._dashboard._user_balance /*double*/  = (double)(Double.parseDouble(_rs.GetString("balance")));
-RDebugUtils.currentLine=589850;
- //BA.debugLineNum = 589850;BA.debugLine="StartActivity(Dashboard)";
+ //BA.debugLineNum = 144;BA.debugLine="StartActivity(Dashboard)";
 anywheresoftware.b4a.keywords.Common.StartActivity(processBA,(Object)(parent.mostCurrent._dashboard.getObject()));
-RDebugUtils.currentLine=589851;
- //BA.debugLineNum = 589851;BA.debugLine="result = True";
+ //BA.debugLineNum = 145;BA.debugLine="result = True";
 _result = anywheresoftware.b4a.keywords.Common.True;
  if (true) break;
 
 case 12:
 //C
 this.state = 13;
-RDebugUtils.currentLine=589853;
- //BA.debugLineNum = 589853;BA.debugLine="xui.MsgboxAsync(\"Invalid username and password";
+ //BA.debugLineNum = 147;BA.debugLine="xui.MsgboxAsync(\"Invalid username and password";
 parent._xui.MsgboxAsync(processBA,BA.ObjectToCharSequence("Invalid username and password"),BA.ObjectToCharSequence(""));
-RDebugUtils.currentLine=589854;
- //BA.debugLineNum = 589854;BA.debugLine="Email.Text = \"\"";
-parent.mostCurrent._email._settext /*String*/ (null,"");
-RDebugUtils.currentLine=589855;
- //BA.debugLineNum = 589855;BA.debugLine="Password.Text = \"\"";
-parent.mostCurrent._password._settext /*String*/ (null,"");
-RDebugUtils.currentLine=589856;
- //BA.debugLineNum = 589856;BA.debugLine="Email.RequestFocusAndShowKeyboard";
-parent.mostCurrent._email._requestfocusandshowkeyboard /*String*/ (null);
-RDebugUtils.currentLine=589857;
- //BA.debugLineNum = 589857;BA.debugLine="result = False";
+ //BA.debugLineNum = 148;BA.debugLine="Email.Text = \"\"";
+parent.mostCurrent._email._settext /*String*/ ("");
+ //BA.debugLineNum = 149;BA.debugLine="Password.Text = \"\"";
+parent.mostCurrent._password._settext /*String*/ ("");
+ //BA.debugLineNum = 150;BA.debugLine="Email.RequestFocusAndShowKeyboard";
+parent.mostCurrent._email._requestfocusandshowkeyboard /*String*/ ();
+ //BA.debugLineNum = 151;BA.debugLine="result = False";
 _result = anywheresoftware.b4a.keywords.Common.False;
  if (true) break;
 
@@ -902,14 +757,11 @@ case 15:
 //C
 this.state = 16;
 this.catchState = 0;
-RDebugUtils.currentLine=589860;
- //BA.debugLineNum = 589860;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("4589860",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
-RDebugUtils.currentLine=589861;
- //BA.debugLineNum = 589861;BA.debugLine="xui.MsgboxAsync(LastException, \"Error\")";
+ //BA.debugLineNum = 154;BA.debugLine="Log(LastException)";
+anywheresoftware.b4a.keywords.Common.LogImpl("3589860",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+ //BA.debugLineNum = 155;BA.debugLine="xui.MsgboxAsync(LastException, \"Error\")";
 parent._xui.MsgboxAsync(processBA,BA.ObjectToCharSequence(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA).getObject()),BA.ObjectToCharSequence("Error"));
-RDebugUtils.currentLine=589862;
- //BA.debugLineNum = 589862;BA.debugLine="result = False";
+ //BA.debugLineNum = 156;BA.debugLine="result = False";
 _result = anywheresoftware.b4a.keywords.Common.False;
  if (true) break;
 if (true) break;
@@ -919,12 +771,10 @@ case 16:
 this.state = -1;
 this.catchState = 0;
 ;
-RDebugUtils.currentLine=589865;
- //BA.debugLineNum = 589865;BA.debugLine="Return result";
+ //BA.debugLineNum = 159;BA.debugLine="Return result";
 if (true) {
 anywheresoftware.b4a.keywords.Common.ReturnFromResumableSub(this,(Object)(_result));return;};
-RDebugUtils.currentLine=589866;
- //BA.debugLineNum = 589866;BA.debugLine="End Sub";
+ //BA.debugLineNum = 160;BA.debugLine="End Sub";
 if (true) break;
 }} 
        catch (Exception e0) {
@@ -939,9 +789,6 @@ processBA.setLastException(e0);}
     }
 }
 public static void  _loginbutton_click() throws Exception{
-RDebugUtils.currentModule="main";
-if (Debug.shouldDelegate(mostCurrent.activityBA, "loginbutton_click", false))
-	 {Debug.delegate(mostCurrent.activityBA, "loginbutton_click", null); return;}
 ResumableSub_LoginButton_Click rsub = new ResumableSub_LoginButton_Click(null);
 rsub.resume(processBA, null);
 }
@@ -954,7 +801,6 @@ boolean _success = false;
 
 @Override
 public void resume(BA ba, Object[] result) throws Exception{
-RDebugUtils.currentModule="main";
 
     while (true) {
 try {
@@ -966,57 +812,48 @@ return;
 case 0:
 //C
 this.state = 1;
-RDebugUtils.currentLine=655362;
- //BA.debugLineNum = 655362;BA.debugLine="If Email.Text = \"\" Then";
+ //BA.debugLineNum = 164;BA.debugLine="If Email.Text = \"\" Then";
 if (true) break;
 
 case 1:
 //if
 this.state = 4;
-if ((parent.mostCurrent._email._gettext /*String*/ (null)).equals("")) { 
+if ((parent.mostCurrent._email._gettext /*String*/ ()).equals("")) { 
 this.state = 3;
 }if (true) break;
 
 case 3:
 //C
 this.state = 4;
-RDebugUtils.currentLine=655363;
- //BA.debugLineNum = 655363;BA.debugLine="xui.MsgboxAsync(\"Email required\", \"\")";
+ //BA.debugLineNum = 165;BA.debugLine="xui.MsgboxAsync(\"Email required\", \"\")";
 parent._xui.MsgboxAsync(processBA,BA.ObjectToCharSequence("Email required"),BA.ObjectToCharSequence(""));
-RDebugUtils.currentLine=655364;
- //BA.debugLineNum = 655364;BA.debugLine="Email.RequestFocusAndShowKeyboard";
-parent.mostCurrent._email._requestfocusandshowkeyboard /*String*/ (null);
-RDebugUtils.currentLine=655365;
- //BA.debugLineNum = 655365;BA.debugLine="Return";
+ //BA.debugLineNum = 166;BA.debugLine="Email.RequestFocusAndShowKeyboard";
+parent.mostCurrent._email._requestfocusandshowkeyboard /*String*/ ();
+ //BA.debugLineNum = 167;BA.debugLine="Return";
 if (true) return ;
  if (true) break;
 ;
-RDebugUtils.currentLine=655368;
- //BA.debugLineNum = 655368;BA.debugLine="If Password.Text = \"\" Then";
+ //BA.debugLineNum = 170;BA.debugLine="If Password.Text = \"\" Then";
 
 case 4:
 //if
 this.state = 7;
-if ((parent.mostCurrent._password._gettext /*String*/ (null)).equals("")) { 
+if ((parent.mostCurrent._password._gettext /*String*/ ()).equals("")) { 
 this.state = 6;
 }if (true) break;
 
 case 6:
 //C
 this.state = 7;
-RDebugUtils.currentLine=655369;
- //BA.debugLineNum = 655369;BA.debugLine="xui.MsgboxAsync(\"Password required\", \"\")";
+ //BA.debugLineNum = 171;BA.debugLine="xui.MsgboxAsync(\"Password required\", \"\")";
 parent._xui.MsgboxAsync(processBA,BA.ObjectToCharSequence("Password required"),BA.ObjectToCharSequence(""));
-RDebugUtils.currentLine=655370;
- //BA.debugLineNum = 655370;BA.debugLine="Password.RequestFocusAndShowKeyboard";
-parent.mostCurrent._password._requestfocusandshowkeyboard /*String*/ (null);
-RDebugUtils.currentLine=655371;
- //BA.debugLineNum = 655371;BA.debugLine="Return";
+ //BA.debugLineNum = 172;BA.debugLine="Password.RequestFocusAndShowKeyboard";
+parent.mostCurrent._password._requestfocusandshowkeyboard /*String*/ ();
+ //BA.debugLineNum = 173;BA.debugLine="Return";
 if (true) return ;
  if (true) break;
 ;
-RDebugUtils.currentLine=655374;
- //BA.debugLineNum = 655374;BA.debugLine="Try";
+ //BA.debugLineNum = 176;BA.debugLine="Try";
 
 case 7:
 //try
@@ -1029,9 +866,8 @@ case 9:
 //C
 this.state = 10;
 this.catchState = 15;
-RDebugUtils.currentLine=655375;
- //BA.debugLineNum = 655375;BA.debugLine="Wait For (Login) Complete (Success As Boolean)";
-anywheresoftware.b4a.keywords.Common.WaitFor("complete", processBA, new anywheresoftware.b4a.shell.DebugResumableSub.DelegatableResumableSub(this, "main", "loginbutton_click"), _login());
+ //BA.debugLineNum = 177;BA.debugLine="Wait For (Login) Complete (Success As Boolean)";
+anywheresoftware.b4a.keywords.Common.WaitFor("complete", processBA, this, _login());
 this.state = 17;
 return;
 case 17:
@@ -1039,8 +875,7 @@ case 17:
 this.state = 10;
 _success = (Boolean) result[0];
 ;
-RDebugUtils.currentLine=655376;
- //BA.debugLineNum = 655376;BA.debugLine="If Success Then";
+ //BA.debugLineNum = 178;BA.debugLine="If Success Then";
 if (true) break;
 
 case 10:
@@ -1053,8 +888,7 @@ this.state = 12;
 case 12:
 //C
 this.state = 13;
-RDebugUtils.currentLine=655377;
- //BA.debugLineNum = 655377;BA.debugLine="xui.MsgboxAsync(\"Login successfully\", \"\")";
+ //BA.debugLineNum = 179;BA.debugLine="xui.MsgboxAsync(\"Login successfully\", \"\")";
 parent._xui.MsgboxAsync(processBA,BA.ObjectToCharSequence("Login successfully"),BA.ObjectToCharSequence(""));
  if (true) break;
 
@@ -1068,11 +902,9 @@ case 15:
 //C
 this.state = 16;
 this.catchState = 0;
-RDebugUtils.currentLine=655380;
- //BA.debugLineNum = 655380;BA.debugLine="Log(LastException)";
-anywheresoftware.b4a.keywords.Common.LogImpl("4655380",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
-RDebugUtils.currentLine=655381;
- //BA.debugLineNum = 655381;BA.debugLine="xui.MsgboxAsync(LastException, \"Error\")";
+ //BA.debugLineNum = 182;BA.debugLine="Log(LastException)";
+anywheresoftware.b4a.keywords.Common.LogImpl("3655380",BA.ObjectToString(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA)),0);
+ //BA.debugLineNum = 183;BA.debugLine="xui.MsgboxAsync(LastException, \"Error\")";
 parent._xui.MsgboxAsync(processBA,BA.ObjectToCharSequence(anywheresoftware.b4a.keywords.Common.LastException(mostCurrent.activityBA).getObject()),BA.ObjectToCharSequence("Error"));
  if (true) break;
 if (true) break;
@@ -1082,8 +914,7 @@ case 16:
 this.state = -1;
 this.catchState = 0;
 ;
-RDebugUtils.currentLine=655383;
- //BA.debugLineNum = 655383;BA.debugLine="End Sub";
+ //BA.debugLineNum = 185;BA.debugLine="End Sub";
 if (true) break;
 }} 
        catch (Exception e0) {
@@ -1097,20 +928,45 @@ processBA.setLastException(e0);}
         }
     }
 }
+
+public static void initializeProcessGlobals() {
+    
+    if (main.processGlobalsRun == false) {
+	    main.processGlobalsRun = true;
+		try {
+		        b4a.example.dateutils._process_globals();
+main._process_globals();
+signup._process_globals();
+dashboard._process_globals();
+addbalance._process_globals();
+addexpense._process_globals();
+starter._process_globals();
+xuiviewsutils._process_globals();
+		
+        } catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+    }
+}public static String  _process_globals() throws Exception{
+ //BA.debugLineNum = 15;BA.debugLine="Sub Process_Globals";
+ //BA.debugLineNum = 18;BA.debugLine="Private xui As XUI";
+_xui = new anywheresoftware.b4a.objects.B4XViewWrapper.XUI();
+ //BA.debugLineNum = 19;BA.debugLine="Dim sql As SQL";
+_sql = new anywheresoftware.b4a.sql.SQL();
+ //BA.debugLineNum = 20;BA.debugLine="Dim Cursor As Cursor";
+_cursor = new anywheresoftware.b4a.sql.SQL.CursorWrapper();
+ //BA.debugLineNum = 21;BA.debugLine="Dim account_id As Int";
+_account_id = 0;
+ //BA.debugLineNum = 22;BA.debugLine="End Sub";
+return "";
+}
 public static String  _register_click() throws Exception{
-RDebugUtils.currentModule="main";
-if (Debug.shouldDelegate(mostCurrent.activityBA, "register_click", false))
-	 {return ((String) Debug.delegate(mostCurrent.activityBA, "register_click", null));}
-RDebugUtils.currentLine=524288;
- //BA.debugLineNum = 524288;BA.debugLine="Private Sub Register_Click";
-RDebugUtils.currentLine=524289;
- //BA.debugLineNum = 524289;BA.debugLine="StartActivity(SignUp)";
+ //BA.debugLineNum = 113;BA.debugLine="Private Sub Register_Click";
+ //BA.debugLineNum = 114;BA.debugLine="StartActivity(SignUp)";
 anywheresoftware.b4a.keywords.Common.StartActivity(processBA,(Object)(mostCurrent._signup.getObject()));
-RDebugUtils.currentLine=524290;
- //BA.debugLineNum = 524290;BA.debugLine="Activity.Finish";
+ //BA.debugLineNum = 115;BA.debugLine="Activity.Finish";
 mostCurrent._activity.Finish();
-RDebugUtils.currentLine=524291;
- //BA.debugLineNum = 524291;BA.debugLine="End Sub";
+ //BA.debugLineNum = 116;BA.debugLine="End Sub";
 return "";
 }
 }
