@@ -86,6 +86,6 @@ Private Sub AddMoney_Click
 		End If
 	Catch
 		Log(LastException)
-		xui.MsgboxAsync(LastException,"Error")
+'		xui.MsgboxAsync(LastException,"Error")
 	End Try
 End Sub

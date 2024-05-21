@@ -16,6 +16,7 @@ Sub Process_Globals
 	Dim user_balance As Double
 	
 	Private Cursor As Cursor
+	Private xui As XUI
 End Sub
 
 Sub Globals
@@ -87,17 +88,28 @@ End Sub
 Private Sub ShowExpense
 	
 	ListView1.Clear
-	Cursor = Main.sql.ExecQuery("SELECT * FROM accounts_expense")
+	Cursor = Main.sql.ExecQuery2("SELECT * FROM accounts_expense WHERE account_id = ?", Array As String(Main.account_id))
 	For i = 0 To Cursor.RowCount - 1
 		Cursor.Position = i
 		ListView1.AddTwoLines(Cursor.GetString("expense_amount"), Cursor.GetString("purpose"))
 	Next
-	
-'	Dim Cursor As Cursor
-'	Cursor = SQL1.ExecQuery("SELECT col1, col2 FROM table1")
-'	For i = 0 To Cursor.RowCount - 1
-'		Cursor.Position = i
-'		Log(Cursor.GetString("col1"))
-'		Log(Cursor.GetInt("col2"))
-'	Next
+End Sub
+
+Private Sub DeleteAccount_Click
+	AccountDelete
+End Sub
+
+Private Sub AccountDelete
+	Try
+		xui.Msgbox2Async("Deleting your account will permanently erase all your data", "", "Yes", "", "No", Null)
+		Wait For Msgbox_Result (Response As Int)
+		If Response = xui.DialogResponse_Positive Then
+			Main.sql.ExecNonQuery2("DELETE FROM accounts WHERE accountID = ?", Array As Object(Main.account_id))
+			StartActivity(Main)
+			Activity.Finish
+		End If
+	Catch
+		Log(LastException)
+		xui.MsgboxAsync(LastException,"Error")
+	End Try
 End Sub

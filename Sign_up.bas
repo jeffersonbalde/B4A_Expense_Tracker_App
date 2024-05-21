@@ -27,7 +27,11 @@ End Sub
 
 Sub Activity_Create(FirstTime As Boolean)
 	'Do not forget to load the layout file created with the visual designer. For example:
-	Activity.LoadLayout("Sign_Up")
+	Try
+		Activity.LoadLayout("SignUp")
+	Catch
+		Log(LastException)
+	End Try
 End Sub
 
 Sub Activity_Resume
@@ -43,7 +47,7 @@ Public Sub insertData As ResumableSub
 	
 	Try
 		Dim query As String = $"INSERT INTO accounts (name, email, password) VALUES (?,?,?)"$
-		Main.sql.ExecNonQuery2(query, Array As Object(Name.Text, Email.Text, Password.Text))
+		Login.sql.ExecNonQuery2(query, Array As Object(Name.Text, Email.Text, Password.Text))
 		result = True
 	Catch
 		Log(LastException)
@@ -63,7 +67,7 @@ Private Sub RegisterButton_Click
 	
 	Try
 		Dim query As String = $"SELECT * FROM accounts WHERE name=?"$
-		Dim rs As ResultSet = Main.sql.ExecQuery2(query, Array As String(Name.Text))
+		Dim rs As ResultSet = Login.sql.ExecQuery2(query, Array As String(Name.Text))
 		
 		If rs.NextRow Then
 			xui.MsgboxAsync("Name already exists","")
@@ -93,7 +97,7 @@ Private Sub RegisterButton_Click
 			xui.MsgboxAsync("Register Complete", "")
 			Wait For Msgbox_Result (response As Int)
 			If response = xui.DialogResponse_Positive Then
-				StartActivity(Main)
+				StartActivity(Login)
 				Activity.Finish
 			End If
 		End If
@@ -104,5 +108,5 @@ Private Sub RegisterButton_Click
 End Sub
 
 Private Sub Login_Click
-	StartActivity(Main)
+	StartActivity(Login)
 End Sub

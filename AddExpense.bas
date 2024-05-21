@@ -61,7 +61,7 @@ Private Sub InsertExpense As ResumableSub
 		result = True
 	Catch
 		Log(LastException)
-		xui.MsgboxAsync(LastException,"Error")
+'		xui.MsgboxAsync(LastException,"Error")
 		result = False
 	End Try
 	

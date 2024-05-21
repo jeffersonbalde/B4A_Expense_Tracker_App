@@ -1,53 +1,9 @@
-﻿Build1=Default,b4a.example
-File1=add.png
-File10=main-bg.png
-File11=Sign_Up.bal
-File12=test.db
-File2=Add_Balance.bal
-File3=AddExpense.bal
-File4=Dashboard.bal
-File5=lalove1.png
-File6=lalove2.png
-File7=lalove3.png
-File8=logo.png
-File9=Main.bal
-FileGroup1=Default Group
-FileGroup10=Default Group
-FileGroup11=Default Group
-FileGroup12=Default Group
-FileGroup2=Default Group
-FileGroup3=Default Group
-FileGroup4=Default Group
-FileGroup5=Default Group
-FileGroup6=Default Group
-FileGroup7=Default Group
-FileGroup8=Default Group
-FileGroup9=Default Group
+﻿B4A=true
 Group=Default Group
-Library1=core
-Library2=sql
-Library3=xui
-Library4=xui views
-ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="33"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.LightTheme)~\n~'End of default text.~\n~
-Module1=AddBalance
-Module2=AddExpense
-Module3=Dashboard
-Module4=SignUp
-Module5=Starter
-NumberOfFiles=12
-NumberOfLibraries=4
-NumberOfModules=5
+ModulesStructureVersion=1
+Type=Activity
 Version=12.8
 @EndOfDesignText@
-#Region  Project Attributes 
-	#ApplicationLabel: B4A Example
-	#VersionCode: 1
-	#VersionName: 
-	'SupportedOrientations possible values: unspecified, landscape or portrait.
-	#SupportedOrientations: unspecified
-	#CanInstallToExternalStorage: False
-#End Region
-
 #Region  Activity Attributes 
 	#FullScreen: False
 	#IncludeTitle: False
@@ -56,14 +12,18 @@ Version=12.8
 Sub Process_Globals
 	'These global variables will be declared once when the application starts.
 	'These variables can be accessed from all modules.
+
 	Private xui As XUI
 	Dim sql As SQL
 	Dim Cursor As Cursor
 	Dim account_id As Int
+	
 End Sub
 
 Sub Globals
 	'These global variables will be redeclared each time the activity is created.
+	'These variables can only be accessed from this module.
+
 	Private Password As B4XFloatTextField
 	Private Email As B4XFloatTextField
 	
@@ -71,15 +31,11 @@ Sub Globals
 End Sub
 
 Sub Activity_Create(FirstTime As Boolean)
+	'Do not forget to load the layout file created with the visual designer. For example:
 	
 	If FirstTime Then
 		sql.Initialize(File.DirInternal, "test.db", True)
 	End If
-	
-'	Wait For (dropTable) Complete (Success As Boolean)
-'	If Success Then
-'	
-'	End If
 	
 	Wait For (createTableAccounts) Complete (Success As Boolean)
 	If Success Then'
@@ -103,7 +59,7 @@ Sub Activity_Create(FirstTime As Boolean)
 	End If
 	
 	Activity.LoadLayout("Main")
-	
+
 End Sub
 
 Sub Activity_Resume
@@ -151,12 +107,12 @@ Public Sub dropTable As ResumableSub
 	Return True
 End Sub
 
-Private Sub Register_Click
-	StartActivity(SignUp)
-	Activity.Finish
-End Sub
+'Private Sub Register_Click
+'	StartActivity(Sign_up)
+'	Activity.Finish
+'End Sub
 
-Public Sub Login As ResumableSub
+Public Sub AccountLogin As ResumableSub
 	Dim result As Boolean
 	
 	Try
@@ -215,7 +171,7 @@ Private Sub LoginButton_Click
 	End If
 	
 	Try
-		Wait For (Login) Complete (Success As Boolean)
+		Wait For (AccountLogin) Complete (Success As Boolean)
 		If Success Then
 			xui.MsgboxAsync("Login successfully", "")
 		End If
@@ -223,4 +179,9 @@ Private Sub LoginButton_Click
 		Log(LastException)
 		xui.MsgboxAsync(LastException, "Error")
 	End Try
+End Sub
+
+Private Sub Register_Click
+	StartActivity(SignUp)
+	Activity.Finish
 End Sub
